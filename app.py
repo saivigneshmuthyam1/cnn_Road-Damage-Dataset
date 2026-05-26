@@ -1,6 +1,6 @@
 # =========================================================
 # AI-BASED ROAD DAMAGE DETECTION SYSTEM
-# PROFESSIONAL STREAMLIT DASHBOARD
+# EXACT PROFESSIONAL UI
 # =========================================================
 
 # =========================================================
@@ -15,7 +15,7 @@ import tensorflow as tf
 import pandas as pd
 
 # =========================================================
-# PAGE CONFIG
+# PAGE CONFIGURATION
 # =========================================================
 
 st.set_page_config(
@@ -36,14 +36,18 @@ st.markdown("""
 
 <style>
 
-/* MAIN BACKGROUND */
+/* =====================================================
+BACKGROUND
+===================================================== */
 
 .stApp {
 
-    background-color: #f5f7fb;
+    background-color: #f4f6fb;
 }
 
-/* REMOVE EXTRA SPACE */
+/* =====================================================
+REMOVE DEFAULT STREAMLIT SPACING
+===================================================== */
 
 .block-container {
 
@@ -54,7 +58,9 @@ st.markdown("""
     max-width: 100%;
 }
 
-/* HIDE STREAMLIT MENU */
+/* =====================================================
+HIDE STREAMLIT MENU
+===================================================== */
 
 #MainMenu {
 
@@ -66,19 +72,21 @@ footer {
     visibility: hidden;
 }
 
-/* HEADER */
+/* =====================================================
+HEADER
+===================================================== */
 
 .header {
 
     background: linear-gradient(
         90deg,
-        #031633,
+        #02152f,
         #0a2d6b
     );
 
-    border-radius: 0px 0px 25px 25px;
+    padding: 35px 55px;
 
-    padding: 30px 50px;
+    border-radius: 0px 0px 28px 28px;
 
     margin-bottom: 30px;
 }
@@ -105,7 +113,7 @@ footer {
 
     color: white;
 
-    font-size: 60px;
+    font-size: 62px;
 
     font-weight: 800;
 
@@ -118,51 +126,61 @@ footer {
 
     font-size: 28px;
 
-    margin-top: 15px;
-
     font-weight: 600;
+
+    margin-top: 18px;
 }
 
-/* HEADER IMAGE */
+/* =====================================================
+HEADER IMAGE
+===================================================== */
 
 .header-image img {
 
-    width: 420px;
+    width: 430px;
 
     border-radius: 18px;
 
-    box-shadow: 0px 4px 18px rgba(0,0,0,0.3);
+    object-fit: cover;
+
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
 }
 
-/* CARDS */
+/* =====================================================
+CARDS
+===================================================== */
 
 .card {
 
     background-color: white;
 
-    border-radius: 20px;
+    border-radius: 22px;
 
     padding: 28px;
 
     margin-bottom: 25px;
 
-    box-shadow: 0px 3px 12px rgba(0,0,0,0.08);
+    box-shadow: 0px 3px 14px rgba(0,0,0,0.08);
 }
 
-/* SECTION TITLES */
+/* =====================================================
+SECTION TITLE
+===================================================== */
 
 .section-title {
 
     color: #0a2d6b;
 
-    font-size: 32px;
+    font-size: 34px;
 
     font-weight: 700;
 
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
-/* ABOUT TEXT */
+/* =====================================================
+ABOUT TEXT
+===================================================== */
 
 .about-text {
 
@@ -170,27 +188,48 @@ footer {
 
     font-size: 18px;
 
-    line-height: 1.9;
+    line-height: 2;
 }
 
-/* RESULT BOX */
+/* =====================================================
+UPLOAD BOX
+===================================================== */
+
+.upload-box {
+
+    border: 2px dashed #2563eb;
+
+    border-radius: 18px;
+
+    padding: 50px 30px;
+
+    text-align: center;
+
+    margin-top: 20px;
+}
+
+/* =====================================================
+RESULT BOX
+===================================================== */
 
 .result-box {
 
     background-color: #f8fbff;
 
-    border: 1px solid #dbeafe;
-
     border-radius: 18px;
 
-    padding: 24px;
+    padding: 22px;
 
     text-align: center;
 
-    height: 180px;
+    border: 1px solid #dbeafe;
+
+    height: 190px;
 }
 
-/* RESULT TITLE */
+/* =====================================================
+RESULT TITLE
+===================================================== */
 
 .result-title {
 
@@ -201,49 +240,58 @@ footer {
     font-weight: 600;
 }
 
-/* RESULT VALUE */
+/* =====================================================
+RESULT VALUE
+===================================================== */
 
 .result-value {
 
-    font-size: 36px;
+    font-size: 38px;
 
     font-weight: 800;
 
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
-/* FILE UPLOADER */
-
-[data-testid="stFileUploader"] {
-
-    background-color: white;
-
-    border: 2px dashed #2563eb;
-
-    border-radius: 18px;
-
-    padding: 25px;
-}
-
-/* FOOTER */
+/* =====================================================
+FOOTER
+===================================================== */
 
 .footer {
 
     background: linear-gradient(
         90deg,
-        #031633,
+        #02152f,
         #0a2d6b
     );
 
-    color: white;
+    padding: 28px;
 
-    padding: 25px;
-
-    border-radius: 20px 20px 0px 0px;
+    border-radius: 22px 22px 0px 0px;
 
     text-align: center;
 
+    color: white;
+
     margin-top: 40px;
+}
+
+/* =====================================================
+FILE UPLOADER
+===================================================== */
+
+[data-testid="stFileUploader"] {
+
+    border: none;
+}
+
+/* =====================================================
+CHART
+===================================================== */
+
+[data-testid="stVerticalBlock"] canvas {
+
+    border-radius: 10px;
 }
 
 </style>
@@ -372,15 +420,15 @@ with col2:
 
 col3, col4 = st.columns(2, gap="large")
 
-# ---------------------------------------------------------
+# =========================================================
 # UPLOAD AREA
-# ---------------------------------------------------------
+# =========================================================
 
 with col3:
 
     st.markdown("""
 
-    <div class="card" style="height:500px;">
+    <div class="card" style="height:520px;">
 
     <div class="section-title">
     📤 Upload Road Image
@@ -390,7 +438,7 @@ with col3:
 
     uploaded_file = st.file_uploader(
 
-        "Choose JPG / PNG Road Image",
+        "Upload Image",
 
         type=["jpg", "jpeg", "png"],
 
@@ -400,19 +448,31 @@ with col3:
 
     st.markdown("""
 
+    <div class="upload-box">
+
     <div style="
-    margin-top:50px;
-    text-align:center;
+    font-size:70px;
     color:#2563eb;
-    font-size:20px;
-    font-weight:600;
     ">
+    ☁️
+    </div>
 
+    <div style="
+    color:#0a2d6b;
+    font-size:28px;
+    font-weight:600;
+    margin-top:10px;
+    ">
     Drag & Drop your image here
+    </div>
 
-    <br><br>
-
+    <div style="
+    color:#64748b;
+    font-size:22px;
+    margin-top:15px;
+    ">
     Supports: JPG, JPEG, PNG
+    </div>
 
     </div>
 
@@ -420,15 +480,15 @@ with col3:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ---------------------------------------------------------
+# =========================================================
 # IMAGE PREVIEW
-# ---------------------------------------------------------
+# =========================================================
 
 with col4:
 
     st.markdown("""
 
-    <div class="card" style="height:500px;">
+    <div class="card" style="height:520px;">
 
     <div class="section-title">
     🖼 Uploaded Image
@@ -514,9 +574,9 @@ if uploaded_file is not None:
 
     c1, c2, c3 = st.columns(3, gap="large")
 
-    # -----------------------------------------------------
+    # =====================================================
     # PREDICTION
-    # -----------------------------------------------------
+    # =====================================================
 
     with c1:
 
@@ -525,7 +585,7 @@ if uploaded_file is not None:
         <div class="result-box">
 
         <div style="
-        font-size:55px;
+        font-size:60px;
         margin-bottom:10px;
         ">
         ✅
@@ -537,16 +597,16 @@ if uploaded_file is not None:
 
         <div class="result-value"
         style="color:#16a34a;">
-        {predicted_label}
+        {predicted_label.title()} Detected
         </div>
 
         </div>
 
         """, unsafe_allow_html=True)
 
-    # -----------------------------------------------------
+    # =====================================================
     # CONFIDENCE
-    # -----------------------------------------------------
+    # =====================================================
 
     with c2:
 
@@ -555,7 +615,7 @@ if uploaded_file is not None:
         <div class="result-box">
 
         <div style="
-        font-size:55px;
+        font-size:60px;
         margin-bottom:10px;
         ">
         🛡️
@@ -574,9 +634,9 @@ if uploaded_file is not None:
 
         """, unsafe_allow_html=True)
 
-    # -----------------------------------------------------
+    # =====================================================
     # SEVERITY
-    # -----------------------------------------------------
+    # =====================================================
 
     with c3:
 
@@ -585,7 +645,7 @@ if uploaded_file is not None:
         <div class="result-box">
 
         <div style="
-        font-size:55px;
+        font-size:60px;
         margin-bottom:10px;
         ">
         ⚠️
@@ -596,7 +656,7 @@ if uploaded_file is not None:
         </div>
 
         <div class="result-value"
-        style="color:#ea580c;">
+        style="color:#f59e0b;">
         {severity}
         </div>
 
@@ -607,7 +667,7 @@ if uploaded_file is not None:
     st.markdown("</div>", unsafe_allow_html=True)
 
     # =====================================================
-    # CONFIDENCE GRAPH
+    # GRAPH SECTION
     # =====================================================
 
     st.markdown("""
@@ -696,7 +756,7 @@ st.markdown("""
 🏙 Smart City AI Monitoring System
 </h2>
 
-<p style="font-size:18px;">
+<p style="font-size:20px;">
 using CNN and Streamlit
 </p>
 
