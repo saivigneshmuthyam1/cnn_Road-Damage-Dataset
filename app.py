@@ -1,6 +1,7 @@
 # =========================================================
 # AI-BASED ROAD DAMAGE DETECTION SYSTEM
-# PROFESSIONAL STREAMLIT UI
+# STREAMLIT APPLICATION
+# PROFESSIONAL BLUE & WHITE UI
 # =========================================================
 
 # =========================================================
@@ -15,12 +16,12 @@ import tensorflow as tf
 import pandas as pd
 
 # =========================================================
-# PAGE CONFIG
+# PAGE CONFIGURATION
 # =========================================================
 
 st.set_page_config(
 
-    page_title="Road Damage Detection",
+    page_title="Road Damage Detection System",
 
     page_icon="🚧",
 
@@ -36,89 +37,178 @@ st.markdown("""
 
 <style>
 
-.main {
-    background-color: #f5f7fb;
+/* MAIN BACKGROUND */
+
+.stApp {
+
+    background-color: #050b18;
+}
+
+/* REMOVE EXTRA SPACE */
+
+.block-container {
+
+    padding-top: 1.2rem;
+
+    padding-bottom: 1rem;
 }
 
 /* HEADER */
+
 .header-container {
-    background: linear-gradient(90deg,#031633,#082b63);
+
+    background: linear-gradient(
+        90deg,
+        #031633,
+        #0a2d6b
+    );
+
     padding: 35px;
-    border-radius: 0px 0px 25px 25px;
-    margin-bottom: 25px;
+
+    border-radius: 22px;
+
+    margin-bottom: 30px;
 }
 
-.header-flex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.header-text {
-    color: white;
-}
+/* HEADER TITLE */
 
 .header-title {
-    font-size: 52px;
+
+    color: white;
+
+    font-size: 54px;
+
     font-weight: 800;
+
     line-height: 1.1;
 }
 
+/* HEADER SUBTITLE */
+
 .header-subtitle {
-    color: #f4c542;
-    font-size: 28px;
-    margin-top: 10px;
-    font-weight: 600;
+
+    color: #c7dcff;
+
+    font-size: 24px;
+
+    margin-top: 12px;
+
+    font-weight: 500;
 }
 
-.header-img img {
-    border-radius: 15px;
-}
+/* CARDS */
 
-/* SECTION CARDS */
 .card {
+
     background-color: white;
+
     padding: 25px;
+
     border-radius: 18px;
-    box-shadow: 0px 2px 12px rgba(0,0,0,0.08);
+
     margin-bottom: 25px;
+
+    box-shadow: 0px 4px 14px rgba(0,0,0,0.08);
 }
 
-/* SECTION TITLE */
+/* CARD TEXT FIX */
+
+.card p,
+.card li,
+.card h4 {
+
+    color: #0f172a !important;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+}
+
+/* SECTION TITLES */
+
 .section-title {
-    font-size: 30px;
-    font-weight: 700;
+
     color: #0a2d6b;
-    margin-bottom: 15px;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    margin-bottom: 20px;
 }
 
 /* RESULT BOX */
+
 .result-box {
+
     background-color: #f8fbff;
-    border: 1px solid #dbe7ff;
+
+    border: 1px solid #dbeafe;
+
     border-radius: 15px;
-    padding: 20px;
+
+    padding: 22px;
+
+    margin-bottom: 18px;
+
     text-align: center;
 }
 
+/* RESULT TITLE */
+
 .result-title {
+
     color: #0a2d6b;
-    font-size: 20px;
+
+    font-size: 18px;
+
     font-weight: 600;
 }
 
+/* RESULT VALUE */
+
 .result-value {
-    font-size: 35px;
+
+    font-size: 34px;
+
     font-weight: 800;
+
     margin-top: 10px;
+
+    color: #2563eb;
 }
 
-.footer {
-    background: linear-gradient(90deg,#031633,#082b63);
-    color: white;
+/* FILE UPLOADER */
+
+[data-testid="stFileUploader"] {
+
+    background-color: white;
+
+    border: 2px dashed #2563eb;
+
+    border-radius: 15px;
+
     padding: 20px;
-    border-radius: 20px 20px 0px 0px;
+}
+
+/* FOOTER */
+
+.footer {
+
+    background: linear-gradient(
+        90deg,
+        #031633,
+        #0a2d6b
+    );
+
+    color: white;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
     text-align: center;
+
     margin-top: 40px;
 }
 
@@ -151,17 +241,37 @@ st.markdown("""
 
 <div class="header-container">
 
-<div class="header-flex">
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:30px;
+flex-wrap:wrap;
+">
 
-<div class="header-text">
+<div>
 
 <div class="header-title">
-🚧 AI-Based Road Damage Detection System
+🚧 AI-Based Road <br>
+Damage Detection System
 </div>
 
 <div class="header-subtitle">
 Smart City Infrastructure Monitoring using CNN
 </div>
+
+</div>
+
+<div>
+
+<img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop"
+
+width="420"
+
+style="
+border-radius:18px;
+box-shadow:0px 4px 15px rgba(0,0,0,0.3);
+">
 
 </div>
 
@@ -176,31 +286,44 @@ Smart City Infrastructure Monitoring using CNN
 # =========================================================
 
 st.markdown("""
+
 <div class="card">
 
 <div class="section-title">
 📌 About the Project
 </div>
 
+<p>
+
 Road monitoring is important for maintaining safe transportation systems.
 Delayed identification of potholes and cracks may increase accidents,
 traffic congestion, and vehicle damage.
 
-<br><br>
+</p>
 
-This project uses Convolutional Neural Networks (CNNs) in Computer Vision
+<p>
+
+This project uses Convolutional Neural Networks (CNNs)
 to automatically analyze road images and detect different types of road damage.
 
-<br><br>
+</p>
 
-<b>Industry Applications:</b>
+<h4>
+Industry Applications
+</h4>
 
 <ul>
+
 <li>Smart City Monitoring</li>
+
 <li>Automated Road Inspection</li>
+
 <li>Municipal Maintenance Systems</li>
+
 <li>Highway Safety Analysis</li>
+
 <li>Infrastructure Management</li>
+
 </ul>
 
 </div>
@@ -208,18 +331,24 @@ to automatically analyze road images and detect different types of road damage.
 """, unsafe_allow_html=True)
 
 # =========================================================
-# UPLOAD SECTION
+# UPLOAD SECTION TITLE
 # =========================================================
 
 st.markdown("""
+
 <div class="section-title">
 📤 Upload Road Image
 </div>
+
 """, unsafe_allow_html=True)
+
+# =========================================================
+# FILE UPLOADER
+# =========================================================
 
 uploaded_file = st.file_uploader(
 
-    "Choose a road image",
+    "Choose JPG / PNG Road Image",
 
     type=["jpg", "jpeg", "png"]
 
@@ -259,36 +388,42 @@ if uploaded_file is not None:
 
     predicted_label = classes[predicted_class]
 
-    # -----------------------------------------------------
+    # =====================================================
     # SEVERITY LEVEL
-    # -----------------------------------------------------
+    # =====================================================
 
     if confidence > 0.85:
+
         severity = "High"
 
     elif confidence > 0.60:
+
         severity = "Medium"
 
     else:
+
         severity = "Low"
 
     # =====================================================
-    # IMAGE + RESULT SECTION
+    # COLUMNS
     # =====================================================
 
     col1, col2 = st.columns(2)
 
-    # -----------------------------------------------------
+    # =====================================================
     # IMAGE PREVIEW
-    # -----------------------------------------------------
+    # =====================================================
 
     with col1:
 
         st.markdown("""
+
         <div class="card">
+
         <div class="section-title">
         🖼 Uploaded Image
         </div>
+
         """, unsafe_allow_html=True)
 
         st.image(
@@ -298,21 +433,26 @@ if uploaded_file is not None:
 
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # -----------------------------------------------------
-    # PREDICTION RESULT
-    # -----------------------------------------------------
+    # =====================================================
+    # PREDICTION AREA
+    # =====================================================
 
     with col2:
 
         st.markdown("""
+
         <div class="card">
+
         <div class="section-title">
         🎯 Prediction Result
         </div>
+
         """, unsafe_allow_html=True)
 
         # Prediction
+
         st.markdown(f"""
+
         <div class="result-box">
 
         <div class="result-title">
@@ -324,29 +464,31 @@ if uploaded_file is not None:
         </div>
 
         </div>
+
         """, unsafe_allow_html=True)
 
-        st.write("")
-
         # Confidence
+
         st.markdown(f"""
+
         <div class="result-box">
 
         <div class="result-title">
         Confidence
         </div>
 
-        <div class="result-value" style="color:#2563eb;">
+        <div class="result-value">
         {confidence*100:.2f}%
         </div>
 
         </div>
+
         """, unsafe_allow_html=True)
 
-        st.write("")
-
         # Severity
+
         st.markdown(f"""
+
         <div class="result-box">
 
         <div class="result-title">
@@ -358,6 +500,7 @@ if uploaded_file is not None:
         </div>
 
         </div>
+
         """, unsafe_allow_html=True)
 
         st.markdown("</div>", unsafe_allow_html=True)
@@ -367,10 +510,13 @@ if uploaded_file is not None:
     # =====================================================
 
     st.markdown("""
+
     <div class="card">
+
     <div class="section-title">
     📊 Class Confidence Graph
     </div>
+
     """, unsafe_allow_html=True)
 
     probability_df = pd.DataFrame({
@@ -392,37 +538,47 @@ if uploaded_file is not None:
     # =====================================================
 
     st.markdown("""
+
     <div class="card">
+
     <div class="section-title">
     🛠 Recommendations
     </div>
+
     """, unsafe_allow_html=True)
 
     if predicted_label == "potholes":
 
         st.error("""
+
 Immediate maintenance recommended.
 
 High-risk road condition detected.
+
 Potential danger for vehicles and pedestrians.
+
 """)
 
     elif predicted_label == "cracks":
 
         st.warning("""
+
 Road surface cracks detected.
 
 Preventive maintenance is recommended
 to avoid further road deterioration.
+
 """)
 
     elif predicted_label == "manholes":
 
         st.info("""
+
 Manhole structure detected.
 
 Ensure proper alignment and maintenance
 to avoid vehicle instability.
+
 """)
 
     st.markdown("</div>", unsafe_allow_html=True)
@@ -435,11 +591,11 @@ st.markdown("""
 
 <div class="footer">
 
-<h3>
+<h2>
 🏙 Smart City AI Monitoring System
-</h3>
+</h2>
 
-<p>
+<p style="font-size:18px;">
 using CNN and Streamlit
 </p>
 
