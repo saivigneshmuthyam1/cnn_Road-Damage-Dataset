@@ -1,6 +1,6 @@
 # =========================================================
-# TASK 10 — STREAMLIT DEPLOYMENT
-# ROAD DAMAGE DETECTION SYSTEM
+# AI-BASED ROAD DAMAGE DETECTION SYSTEM
+# STREAMLIT DEPLOYMENT
 # =========================================================
 
 # =========================================================
@@ -12,8 +12,8 @@ import numpy as np
 import cv2
 from PIL import Image
 import tensorflow as tf
-import sys
-print(sys.executable)
+import pandas as pd
+import matplotlib.pyplot as plt
 
 # =========================================================
 # PAGE CONFIGURATION
@@ -21,11 +21,11 @@ print(sys.executable)
 
 st.set_page_config(
 
-    page_title="Road Damage Detection",
+    page_title="Road Damage Detection System",
 
     page_icon="🚧",
 
-    layout="centered"
+    layout="wide"
 
 )
 
@@ -38,7 +38,7 @@ model = tf.keras.models.load_model(
 )
 
 # =========================================================
-# LOAD LABEL MAPPINGS
+# LOAD LABEL MAPPING
 # =========================================================
 
 classes = np.load(
@@ -47,30 +47,54 @@ classes = np.load(
 )
 
 # =========================================================
-# APPLICATION TITLE
+# SECTION 1 — HEADER
 # =========================================================
 
-st.title("🚧 Road Damage Detection System")
+st.title("🚧 AI-Based Road Damage Detection System")
 
-st.markdown("""
-This AI-powered system detects:
+st.subheader(
+    "Smart City Infrastructure Monitoring using CNN"
+)
 
-- potholes
-- cracks
-- manholes
+st.markdown("---")
 
-using a CNN model.
+# =========================================================
+# SECTION 2 — ABOUT PROJECT
+# =========================================================
+
+st.header("📌 About the Project")
+
+st.write("""
+Road monitoring is important for maintaining safe transportation systems.
+Delayed identification of potholes and cracks may increase accidents,
+traffic congestion, and vehicle damage.
+
+This project uses Convolutional Neural Networks (CNNs) in Computer Vision
+to automatically analyze road images and detect different types of road damage.
+
+Industry Applications:
+- Smart City Monitoring
+- Automated Road Inspection
+- Municipal Maintenance Systems
+- Highway Safety Analysis
+- Infrastructure Management
 """)
 
+st.markdown("---")
+
 # =========================================================
-# IMAGE UPLOAD
+# SECTION 3 — UPLOAD AREA
 # =========================================================
+
+st.header("📤 Upload Road Image")
 
 uploaded_file = st.file_uploader(
 
-    "Upload Road Image",
+    "Choose a road image",
 
-    type=["jpg", "jpeg", "png"]
+    type=["jpg", "jpeg", "png"],
+
+    help="Upload JPG, JPEG, or PNG images only"
 
 )
 
@@ -80,26 +104,26 @@ uploaded_file = st.file_uploader(
 
 def predict_image(image):
 
-    # Convert image to numpy array
+    # Convert PIL image to array
     img = np.array(image)
 
-    # Resize image
-    img = cv2.resize(img, (128,128))
+    # Resize
+    img_resized = cv2.resize(img, (128,128))
 
-    # Normalize image
-    img = img / 255.0
+    # Normalize
+    img_normalized = img_resized / 255.0
 
     # Expand dimensions
-    img = np.expand_dims(img, axis=0)
+    img_input = np.expand_dims(img_normalized, axis=0)
 
-    # Prediction
-    prediction = model.predict(img)
+    # Predict
+    prediction = model.predict(img_input)
 
     predicted_class = np.argmax(prediction)
 
     confidence = np.max(prediction)
 
-    return predicted_class, confidence
+    return prediction[0], predicted_class, confidence
 
 # =========================================================
 # PROCESS IMAGE
@@ -107,52 +131,120 @@ def predict_image(image):
 
 if uploaded_file is not None:
 
-    # Open image
     image = Image.open(uploaded_file)
 
-    # -----------------------------------------------------
-    # IMAGE PREVIEW
-    # -----------------------------------------------------
+    col1, col2 = st.columns(2)
 
-    st.subheader("Uploaded Image")
+    # =====================================================
+    # SECTION 4 — IMAGE PREVIEW
+    # =====================================================
 
-    st.image(
+    with col1:
 
-        image,
+        st.header("🖼 Uploaded Image")
 
-        use_container_width=True
+        st.image(
+            image,
+            use_container_width=True
+        )
 
+    # =====================================================
+    # MODEL PREDICTION
+    # =====================================================
+
+    probabilities, predicted_class, confidence = predict_image(image)
+
+    predicted_label = classes[predicted_class]
+
+    # =====================================================
+    # SEVERITY LOGIC
+    # =====================================================
+
+    if confidence > 0.85:
+        severity = "High"
+
+    elif confidence > 0.60:
+        severity = "Medium"
+
+    else:
+        severity = "Low"
+
+    # =====================================================
+    # SECTION 5 — PREDICTION AREA
+    # =====================================================
+
+    with col2:
+
+        st.header("📊 Prediction Result")
+
+        st.success(
+            f"Prediction: {predicted_label}"
+        )
+
+        st.info(
+            f"Confidence: {confidence*100:.2f}%"
+        )
+
+        st.warning(
+            f"Severity Level: {severity}"
+        )
+
+    st.markdown("---")
+
+    # =====================================================
+    # SECTION 6 — VISUALIZATION AREA
+    # =====================================================
+
+    st.header("📈 Class Confidence Graph")
+
+    probability_df = pd.DataFrame({
+
+        "Class": classes,
+
+        "Confidence": probabilities
+
+    })
+
+    st.bar_chart(
+        probability_df.set_index("Class")
     )
 
-    # -----------------------------------------------------
-    # PREDICTION
-    # -----------------------------------------------------
+    # =====================================================
+    # SECTION 7 — RECOMMENDATIONS
+    # =====================================================
 
-    with st.spinner("Analyzing Road Image..."):
+    st.header("🛠 Recommendations")
 
-        predicted_class, confidence = predict_image(image)
+    if predicted_label == "potholes":
 
-    # -----------------------------------------------------
-    # PREDICTION RESULT
-    # -----------------------------------------------------
+        st.error("""
+Immediate maintenance recommended.
 
-    st.subheader("Prediction Result")
+High-risk road condition detected.
+Potential danger for vehicles and pedestrians.
+""")
 
-    st.success(
-        f"{classes[predicted_class]}"
-    )
+    elif predicted_label == "cracks":
 
-    # -----------------------------------------------------
-    # CONFIDENCE SCORE
-    # -----------------------------------------------------
+        st.warning("""
+Road surface cracks detected.
 
-    st.subheader("Confidence Score")
+Preventive maintenance is recommended
+to avoid further road deterioration.
+""")
 
-    st.write(
-        f"{confidence:.2f}"
-    )
+    elif predicted_label == "manholes":
 
-    st.progress(float(confidence))
+        st.info("""
+Manhole structure detected.
+
+Ensure proper alignment and maintenance
+to avoid vehicle instability.
+""")
+
+    else:
+
+        st.write("No major issue detected.")
 
 # =========================================================
 # FOOTER
@@ -161,5 +253,5 @@ if uploaded_file is not None:
 st.markdown("---")
 
 st.write(
-    "Smart City AI Road Monitoring System"
+    "🚀 Smart City AI Monitoring System using CNN and Streamlit"
 )
