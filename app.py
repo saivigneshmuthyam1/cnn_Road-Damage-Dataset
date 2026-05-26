@@ -295,7 +295,7 @@ Smart City Infrastructure Monitoring using CNN
 
 <div class="header-image">
 
-<img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop">
+<img src="https://c.files.bbci.co.uk/af6d/live/b595d020-215f-11f1-b539-43e5d7f861d2.jpg">
 
 </div>
 
