@@ -1,6 +1,6 @@
 # =========================================================
 # AI-BASED ROAD DAMAGE DETECTION SYSTEM
-# PROFESSIONAL STREAMLIT UI
+# PROFESSIONAL STREAMLIT DASHBOARD
 # =========================================================
 
 # =========================================================
@@ -15,7 +15,7 @@ import tensorflow as tf
 import pandas as pd
 
 # =========================================================
-# PAGE CONFIGURATION
+# PAGE CONFIG
 # =========================================================
 
 st.set_page_config(
@@ -66,7 +66,7 @@ footer {
     visibility: hidden;
 }
 
-/* HEADER SECTION */
+/* HEADER */
 
 .header {
 
@@ -80,7 +80,7 @@ footer {
 
     padding: 30px 50px;
 
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .header-flex {
@@ -127,7 +127,7 @@ footer {
 
 .header-image img {
 
-    width: 450px;
+    width: 420px;
 
     border-radius: 18px;
 
@@ -155,7 +155,7 @@ footer {
 
     color: #0a2d6b;
 
-    font-size: 34px;
+    font-size: 32px;
 
     font-weight: 700;
 
@@ -173,7 +173,7 @@ footer {
     line-height: 1.9;
 }
 
-/* RESULT BOXES */
+/* RESULT BOX */
 
 .result-box {
 
@@ -187,8 +187,10 @@ footer {
 
     text-align: center;
 
-    margin-bottom: 20px;
+    height: 180px;
 }
+
+/* RESULT TITLE */
 
 .result-title {
 
@@ -199,9 +201,11 @@ footer {
     font-weight: 600;
 }
 
+/* RESULT VALUE */
+
 .result-value {
 
-    font-size: 38px;
+    font-size: 36px;
 
     font-weight: 800;
 
@@ -218,7 +222,7 @@ footer {
 
     border-radius: 18px;
 
-    padding: 20px;
+    padding: 25px;
 }
 
 /* FOOTER */
@@ -240,13 +244,6 @@ footer {
     text-align: center;
 
     margin-top: 40px;
-}
-
-/* CHART */
-
-[data-testid="stVerticalBlock"] canvas {
-
-    border-radius: 10px;
 }
 
 </style>
@@ -295,7 +292,7 @@ Smart City Infrastructure Monitoring using CNN
 
 <div class="header-image">
 
-<img src="https://c.files.bbci.co.uk/af6d/live/b595d020-215f-11f1-b539-43e5d7f861d2.jpg">
+<img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop">
 
 </div>
 
@@ -306,16 +303,16 @@ Smart City Infrastructure Monitoring using CNN
 """, unsafe_allow_html=True)
 
 # =========================================================
-# ABOUT PROJECT
+# ABOUT SECTION
 # =========================================================
 
-col1, col2 = st.columns([2,1])
+col1, col2 = st.columns([2,1], gap="large")
 
 with col1:
 
     st.markdown("""
 
-    <div class="card">
+    <div class="card" style="height:320px;">
 
     <div class="section-title">
     📌 About the Project
@@ -324,6 +321,8 @@ with col1:
     <div class="about-text">
 
     Road monitoring is important for maintaining safe transportation systems.
+
+    <br><br>
 
     Delayed identification of potholes and cracks may increase accidents,
     traffic congestion, and vehicle damage.
@@ -343,7 +342,7 @@ with col2:
 
     st.markdown("""
 
-    <div class="card">
+    <div class="card" style="height:320px;">
 
     <div class="section-title">
     🏙 Industry Applications
@@ -368,16 +367,20 @@ with col2:
     """, unsafe_allow_html=True)
 
 # =========================================================
-# UPLOAD + IMAGE PREVIEW
+# UPLOAD + IMAGE SECTION
 # =========================================================
 
-col3, col4 = st.columns(2)
+col3, col4 = st.columns(2, gap="large")
+
+# ---------------------------------------------------------
+# UPLOAD AREA
+# ---------------------------------------------------------
 
 with col3:
 
     st.markdown("""
 
-    <div class="card">
+    <div class="card" style="height:500px;">
 
     <div class="section-title">
     📤 Upload Road Image
@@ -389,17 +392,43 @@ with col3:
 
         "Choose JPG / PNG Road Image",
 
-        type=["jpg", "jpeg", "png"]
+        type=["jpg", "jpeg", "png"],
+
+        label_visibility="collapsed"
 
     )
 
+    st.markdown("""
+
+    <div style="
+    margin-top:50px;
+    text-align:center;
+    color:#2563eb;
+    font-size:20px;
+    font-weight:600;
+    ">
+
+    Drag & Drop your image here
+
+    <br><br>
+
+    Supports: JPG, JPEG, PNG
+
+    </div>
+
+    """, unsafe_allow_html=True)
+
     st.markdown("</div>", unsafe_allow_html=True)
+
+# ---------------------------------------------------------
+# IMAGE PREVIEW
+# ---------------------------------------------------------
 
 with col4:
 
     st.markdown("""
 
-    <div class="card">
+    <div class="card" style="height:500px;">
 
     <div class="section-title">
     🖼 Uploaded Image
@@ -442,8 +471,11 @@ if uploaded_file is not None:
     image = Image.open(uploaded_file)
 
     image_placeholder.image(
+
         image,
+
         use_container_width=True
+
     )
 
     probabilities, predicted_class, confidence = predict_image(image)
@@ -480,7 +512,11 @@ if uploaded_file is not None:
 
     """, unsafe_allow_html=True)
 
-    c1, c2, c3 = st.columns(3)
+    c1, c2, c3 = st.columns(3, gap="large")
+
+    # -----------------------------------------------------
+    # PREDICTION
+    # -----------------------------------------------------
 
     with c1:
 
@@ -488,11 +524,19 @@ if uploaded_file is not None:
 
         <div class="result-box">
 
+        <div style="
+        font-size:55px;
+        margin-bottom:10px;
+        ">
+        ✅
+        </div>
+
         <div class="result-title">
         Prediction
         </div>
 
-        <div class="result-value" style="color:#16a34a;">
+        <div class="result-value"
+        style="color:#16a34a;">
         {predicted_label}
         </div>
 
@@ -500,17 +544,29 @@ if uploaded_file is not None:
 
         """, unsafe_allow_html=True)
 
+    # -----------------------------------------------------
+    # CONFIDENCE
+    # -----------------------------------------------------
+
     with c2:
 
         st.markdown(f"""
 
         <div class="result-box">
 
+        <div style="
+        font-size:55px;
+        margin-bottom:10px;
+        ">
+        🛡️
+        </div>
+
         <div class="result-title">
         Confidence
         </div>
 
-        <div class="result-value" style="color:#2563eb;">
+        <div class="result-value"
+        style="color:#2563eb;">
         {confidence*100:.2f}%
         </div>
 
@@ -518,17 +574,29 @@ if uploaded_file is not None:
 
         """, unsafe_allow_html=True)
 
+    # -----------------------------------------------------
+    # SEVERITY
+    # -----------------------------------------------------
+
     with c3:
 
         st.markdown(f"""
 
         <div class="result-box">
 
+        <div style="
+        font-size:55px;
+        margin-bottom:10px;
+        ">
+        ⚠️
+        </div>
+
         <div class="result-title">
         Severity Level
         </div>
 
-        <div class="result-value" style="color:#ea580c;">
+        <div class="result-value"
+        style="color:#ea580c;">
         {severity}
         </div>
 
