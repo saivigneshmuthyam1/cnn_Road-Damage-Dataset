@@ -264,14 +264,15 @@ Smart City Infrastructure Monitoring using CNN
 
 <div>
 
-<img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop"
-
+<img 
+src="https://c.files.bbci.co.uk/af6d/live/b595d020-215f-11f1-b539-43e5d7f861d2.jpg"
 width="420"
-
 style="
 border-radius:18px;
 box-shadow:0px 4px 15px rgba(0,0,0,0.3);
-">
+object-fit:cover;
+"
+/>
 
 </div>
 
